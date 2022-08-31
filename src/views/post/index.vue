@@ -53,7 +53,7 @@ import { IHooksOptions } from '@/hooks/interface'
 
 const state: IHooksOptions = reactive({
 	dataListUrl: '/data/post/page.json',
-	deleteUrl: '/data/success.json',
+	deleteUrl: '/app/common/del',
 	queryForm: {
 		postCode: '',
 		postName: ''

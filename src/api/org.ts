@@ -1,4 +1,4 @@
-import service from '@/utils/request'
+import service from '@/axios'
 
 export const useOrgListApi = () => {
 	return service.get('/data/org/list.json')

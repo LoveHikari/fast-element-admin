@@ -86,7 +86,7 @@ import SwitchItem from './components/SwitchItem.vue'
 import SelectItem from './components/SelectItem.vue'
 import { ElMessage } from 'element-plus'
 import { handleThemeStyle } from '@/utils/theme'
-import cache from '@/utils/cache'
+import storage from '@/storage'
 
 const { t } = useI18n()
 const { copy } = useClipboard()
@@ -118,13 +118,13 @@ const theme = computed(() => store.appStore.theme)
 // 处理侧边栏主题
 const handleSidebarTheme = (style: string) => {
 	theme.value.sidebarStyle = style
-	cache.setTheme(theme.value)
+  storage.setTheme(theme.value)
 }
 
 // 处理顶栏主题
 const handleHeaderTheme = (style: string) => {
 	theme.value.headerStyle = style
-	cache.setTheme(theme.value)
+  storage.setTheme(theme.value)
 }
 
 // 处理暗黑模式
@@ -132,13 +132,13 @@ const isDark = useDark()
 
 // 处理其他主题
 const handleOtherTheme = () => {
-	cache.setTheme(theme.value)
+  storage.setTheme(theme.value)
 }
 
 // 处理主题色
 const handleThemeColor = (color: string) => {
 	theme.value.primaryColor = color
-	cache.setTheme(theme.value)
+  storage.setTheme(theme.value)
 
 	handleThemeStyle(theme.value)
 }
@@ -152,7 +152,7 @@ const handleCopyConfig = () => {
 
 // 恢复默认
 const handleResetConfig = async () => {
-	await cache.removeTheme()
+	await storage.removeTheme()
 	window.location.reload()
 }
 </script>

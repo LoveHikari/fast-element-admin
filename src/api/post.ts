@@ -1,4 +1,4 @@
-import service from '@/utils/request'
+import service from '@/axios'
 
 export const usePostApi = (id: Number) => {
 	return service.get('/data/post/1.json')

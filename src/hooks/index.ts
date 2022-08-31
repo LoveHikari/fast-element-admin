@@ -1,5 +1,5 @@
 import { IHooksOptions } from '@/hooks/interface'
-import service from '@/utils/request'
+import service from '@/axios'
 import { onMounted } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
 

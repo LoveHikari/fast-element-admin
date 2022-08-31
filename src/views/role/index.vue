@@ -50,7 +50,7 @@ import { IHooksOptions } from '@/hooks/interface'
 
 const state: IHooksOptions = reactive({
 	dataListUrl: '/data/role/page.json',
-	deleteUrl: '/data/success.json',
+	deleteUrl: '/app/common/del',
 	queryForm: {
 		name: ''
 	}

@@ -1,7 +1,7 @@
-import service from '@/utils/request'
+import service from '@/axios'
 
 export const useUserInfoApi = () => {
-	return service.get('/data/user/info.json')
+	return service.get('/app/common/user/info')
 }
 
 export const updatePasswordApi = (data: any) => {

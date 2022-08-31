@@ -1,7 +1,7 @@
-import service from '@/utils/request'
+import service from '@/axios'
 
 export const useLoginApi = (data: any) => {
-	return service.post('/data/login.json', data, {
+	return service.post('/app/common/user/login', data, {
 		auth: {
 			username: 'web',
 			password: '123456'

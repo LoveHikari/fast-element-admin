@@ -1,4 +1,4 @@
-import service from '@/utils/request'
+import service from '@/axios'
 
 export function useMenuNavApi() {
 	return service.get('/data/menu/nav.json')
