@@ -1,17 +1,22 @@
-import service from '@/axios'
-
-export function useMenuNavApi() {
-	return service.get('/data/menu/nav.json')
-}
+import service from "@/axios";
 
 export const useAuthorityListApi = () => {
-	return service.get('/data/menu/authority.json')
-}
+  return service.get("/data/menu/authority.json");
+};
 
-export const useMenuListApi = () => {
-	return service.get('/data/menu/list.json')
-}
+const menuApi = {
+  getTreeList: () => {
+    return service.get("/app/common/menu/treeList");
+  },
+  getDetail: (id: number) => {
+    return service.get(`/app/common/menu/${id}`);
+  },
+  add: (data: any) => {
+    return service.post("/api/v1/Menu", data);
+  },
+  update: (id: number, data: any) => {
+    return service.patch(`/api/v1/Menu/${id}`, data);
+  }
+};
 
-export const useMenuApi = (id: Number) => {
-	return service.get('/data/menu/1.json')
-}
+export default menuApi;

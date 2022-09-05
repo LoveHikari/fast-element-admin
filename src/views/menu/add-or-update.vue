@@ -76,7 +76,7 @@
 import { reactive, ref, unref } from 'vue'
 import { getIconList } from '@/utils/tool'
 import { ElMessage } from 'element-plus/es'
-import { useMenuApi, useMenuListApi } from '@/api/menu'
+import menuApi from '@/api/menu'
 
 const emit = defineEmits(['refreshDataList'])
 
@@ -132,14 +132,14 @@ const menuTypeChange = () => {
 
 // 获取菜单列表
 const getMenuList = () => {
-	return useMenuListApi().then(res => {
+	return menuApi.getTreeList().then(res => {
 		menuList.value = res.data
 	})
 }
 
 // 获取信息
 const getMenu = (id: number) => {
-	useMenuApi(id).then(res => {
+	menuApi.getDetail(id).then(res => {
 		Object.assign(dataForm, res.data)
 
 		if (dataForm.pid == '0') {

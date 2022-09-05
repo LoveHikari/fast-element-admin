@@ -33,7 +33,7 @@
 import { reactive, ref } from 'vue'
 import { ElMessage } from 'element-plus/es'
 import { useRoleApi } from '@/api/role'
-import { useMenuListApi } from '@/api/menu'
+import menuApi from '@/api/menu'
 import { useOrgListApi } from '@/api/org'
 
 const emit = defineEmits(['refreshDataList'])
@@ -82,7 +82,7 @@ const init = (id?: number) => {
 
 // 获取菜单列表
 const getMenuList = () => {
-	return useMenuListApi().then(res => {
+	return menuApi.getTreeList().then(res => {
 		menuList.value = res.data
 	})
 }
