@@ -5,8 +5,8 @@ export const useAuthorityListApi = () => {
 };
 
 const menuApi = {
-  getTreeList: () => {
-    return service.get("/app/common/menu/treeList");
+  getNavList: () => {
+    return service.get("/app/common/menu/navList");
   },
   getDetail: (id: number) => {
     return service.get(`/app/common/menu/${id}`);

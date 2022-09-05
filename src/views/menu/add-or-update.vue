@@ -132,7 +132,7 @@ const menuTypeChange = () => {
 
 // 获取菜单列表
 const getMenuList = () => {
-	return menuApi.getTreeList().then(res => {
+	return menuApi.getNavList().then(res => {
 		menuList.value = res.data
 	})
 }

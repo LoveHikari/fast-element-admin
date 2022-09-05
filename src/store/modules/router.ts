@@ -11,7 +11,7 @@ export const routerStore = defineStore('routerStore', {
 	}),
 	actions: {
 		async getMenuRoutes() {
-			const { data } = await menuApi.getTreeList()
+			const { data } = await menuApi.getNavList()
 			const routes = generateRoutes(data)
 
 			this.menuRoutes.push(...routes)

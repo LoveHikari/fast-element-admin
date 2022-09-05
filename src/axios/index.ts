@@ -6,7 +6,7 @@ import storage from '@/storage'
 
 // axios实例
 const service = axios.create({
-  baseURL: import.meta.env.VITE_API_URL as any,
+  // baseURL: import.meta.env.VITE_API_URL as any,
   timeout: 60000,
   headers: { 'Content-Type': 'application/json;charset=UTF-8' }
 })
