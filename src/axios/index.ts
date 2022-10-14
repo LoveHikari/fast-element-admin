@@ -46,7 +46,7 @@ service.interceptors.response.use(
 
     const res = response.data
     // 响应成功
-    if (res.code === 0) {
+    if (res.code === 0 || res.code === 200) {
       return res
     }
 
