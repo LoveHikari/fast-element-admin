@@ -69,13 +69,13 @@ export const router = createRouter({
 const whiteList = ["/login"];
 
 // 路由加载前
-router.beforeEach(async (to, from, next) => {
+router.beforeEach(async (to, from) => {
   NProgress.start();
 
   // token存在的情况
   if (store.userStore.token) {
     if (to.path === "/login") {
-      next("/home");
+      return "/home";
     } else {
       // 菜单信息不存在，则重新拉取菜单信息
       if (store.routerStore.menuRoutes.length === 0) {
@@ -98,17 +98,17 @@ router.beforeEach(async (to, from, next) => {
         // 搜索菜单需要使用
         store.routerStore.setSearchMenu(keepAliveRoutes);
 
-        next({ ...to, replace: true });
+        return { ...to, replace: true };
       } else {
-        next();
+        return true;
       }
     }
   } else {
     // 没有token的情况下，可以进入白名单
     if (whiteList.indexOf(to.path) > -1) {
-      next();
+      return true;
     } else {
-      next("/login");
+      return "/login";
     }
   }
 });
