@@ -29,31 +29,28 @@ const constantRoutes: RouteRecordRaw[] = [
 ];
 // @ts-ignore
 const t = i18n.global.t
-const asyncRoutes: RouteRecordRaw = {
-  path: "/",
-  component: () => import("../layout/index.vue"),
-  redirect: "/home",
-  children: [
-    {
-      path: "/home",
-      name: "Home",
-      component: () => import("../views/home.vue"),
-      meta: {
-        title: i18n.global.t("router.home"),
-        affix: true
-      }
-    },
-    {
-      path: "/profile/password",
-      name: "ProfilePassword",
-      component: () => import("../views/profile/password.vue"),
-      meta: {
-        title: i18n.global.t("router.profilePassword"),
-        cache: true
-      }
+const defaultAsyncChildren = [
+  {
+    path: "/home",
+    name: "Home",
+    component: () => import("../views/home.vue"),
+    meta: {
+      title: i18n.global.t("router.home"),
+      affix: true,
+      breadcrumb: [] // 补齐结构
     }
-  ]
-};
+  },
+  {
+    path: "/profile/password",
+    name: "ProfilePassword",
+    component: () => import("../views/profile/password.vue"),
+    meta: {
+      title: i18n.global.t("router.profilePassword"),
+      cache: true,
+      breadcrumb: [] // 补齐结构
+    }
+  }
+];
 
 export const errorRoute: RouteRecordRaw = {
   path: "/:pathMatch(.*)",
@@ -86,14 +83,20 @@ router.beforeEach(async (to, from) => {
         const keepAliveRoutes = getKeepAliveRoutes(menuRoutes, []);
 
         // 添加菜单路由
-        asyncRoutes.children?.push(...keepAliveRoutes);
-        router.addRoute(asyncRoutes);
+        const currentAsyncRoute: RouteRecordRaw = {
+          path: "/",
+          component: () => import("../layout/index.vue"),
+          redirect: "/home",
+          children: [...defaultAsyncChildren, ...keepAliveRoutes]
+        };
+
+        router.addRoute(currentAsyncRoute);
 
         // 错误路由
         router.addRoute(errorRoute);
 
         // 保存路由数据
-        store.routerStore.setRoutes(constantRoutes.concat(asyncRoutes));
+        store.routerStore.setRoutes(constantRoutes.concat(currentAsyncRoute));
 
         // 搜索菜单需要使用
         store.routerStore.setSearchMenu(keepAliveRoutes);
@@ -123,18 +126,22 @@ export const getKeepAliveRoutes = (rs: RouteRecordRaw[], breadcrumb: string[]): 
   const routerList: RouteRecordRaw[] = [];
 
   rs.forEach((item: any) => {
+    const currentBreadcrumb = [...breadcrumb];
     if (item.meta.title) {
-      breadcrumb.push(item.meta.title);
+      currentBreadcrumb.push(item.meta.title);
     }
 
     if (item.children && item.children.length > 0) {
-      routerList.push(...getKeepAliveRoutes(item.children, breadcrumb));
+      routerList.push(...getKeepAliveRoutes(item.children, currentBreadcrumb));
     } else {
-      item.meta.breadcrumb.push(...breadcrumb);
+      if (!item.meta.breadcrumb) {
+        item.meta.breadcrumb = [];
+      }
+      item.meta.breadcrumb.push(...currentBreadcrumb);
       routerList.push(item);
     }
 
-    breadcrumb.pop();
+    currentBreadcrumb.pop();
   });
   return routerList;
 };
